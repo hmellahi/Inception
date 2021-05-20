@@ -1,0 +1,35 @@
+version: "3.3"
+    
+services:
+  nginx:
+    build : ./requirements/nginx/
+    restart: always
+    ports:
+      - "8000:80"
+    networks:
+      - mynetbruh
+  db:
+    build : ./requirements/mariadb/
+    restart: always
+    ports:
+      - "3306:80"
+    volumes:
+      - /home/login/data/db:/var/lib/mysql
+    networks:
+      - mynetbruh
+  wordpress:
+    restart: always
+    depends_on: 
+      - db
+    build : ./requirements/wordpress/
+    ports:
+      - "9000:80"
+    networks:
+      - mynetbruh
+    volumes:
+      - /home/login/data/wordpress:/var/www/wordpress
+
+networks: 
+  mynetbruh:
+volumes:
+  {}
