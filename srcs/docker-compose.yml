@@ -1,35 +1,34 @@
 version: "3.3"
     
 services:
-  nginx:
-    build : ./requirements/nginx/
-    restart: always
-    ports:
-      - "8000:80"
-    networks:
-      - mynetbruh
   db:
     build : ./requirements/mariadb/
     restart: always
     ports:
       - "3306:80"
     volumes:
-      - /home/login/data/db:/var/lib/mysql
-    networks:
-      - mynetbruh
+      - /home/hamza/data/db:/var/lib/mysql
   wordpress:
     restart: always
     depends_on: 
       - db
     build : ./requirements/wordpress/
     ports:
-      - "9000:80"
-    networks:
-      - mynetbruh
+      - "9000:9000"
+    # links:
+      # - nginx
+      # - db
     volumes:
-      - /home/login/data/wordpress:/var/www/wordpress
-
-networks: 
-  mynetbruh:
-volumes:
-  {}
+      # - ./test:/var/www/test
+      - /home/hamza/data/wordpress:/var/www/wordpress
+  nginx:
+    build : ./requirements/nginx/
+    restart: always
+    ports:
+      - "8000:80"
+    volumes:
+      # - data:etc/nginx/sites-available/default
+      - /home/hamza/data/wordpress:/var/www/html/wordpress
+# volumes: 
+  # data:
+    # requirements/nginx/default
