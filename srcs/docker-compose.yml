@@ -15,20 +15,31 @@ services:
     build : ./requirements/wordpress/
     ports:
       - "9000:9000"
-    # links:
-      # - nginx
-      # - db
+    links:
+      - nginx
+      - db
     volumes:
       # - ./test:/var/www/test
       - /home/hamza/data/wordpress:/var/www/wordpress
+    networks:
+      - custom-net
   nginx:
     build : ./requirements/nginx/
     restart: always
     ports:
-      - "8000:80"
+      - "80:80"
+      - "443:443"
+    networks:
+      - custom-net
     volumes:
       # - data:etc/nginx/sites-available/default
-      - /home/hamza/data/wordpress:/var/www/html/wordpress
+      - /home/hamza/data/wordpress:/var/www/wordpress
+    links:
+      - php7
+  php7:
+    image: php:7-fpm-alpine
+networks: 
+  custom-net:
 # volumes: 
   # data:
     # requirements/nginx/default
