@@ -13,4 +13,4 @@ RUN  sh setup.sh
 RUN cd wordpress
 # ENTRYPOINT [ "service", "php7.3-fpm" ,"start" ]
 
-ENTRYPOINT [ "php", "-S" ,"0.0.0.0:9000" ]
+# ENTRYPOINT [ "php", "-S" ,"0.0.0.0:9000" ]

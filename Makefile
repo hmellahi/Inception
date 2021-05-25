@@ -5,9 +5,9 @@ ARGS = #--env-file ./srcs/.env
 all: setup
 
 setup :
-	sudo docker container exec -it srcs_nginx_1 bash -c "kill 1"
-	sudo docker container exec -it srcs_db_1 bash -c "kill 1"
-	sudo docker container exec -it srcs_wordpress_1 bash -c "kill 1"
+	# sudo docker container exec -it srcs_nginx_1 bash -c "kill 1"
+	# sudo docker container exec -it srcs_db_1 bash -c "kill 1"
+	# sudo docker container exec -it srcs_wordpress_1 bash -c "kill 1"
 	sudo docker-compose -f ${SRC} build 
 	sudo docker-compose ${ARGS} -f ${SRC} up -d --remove-orphans 
 up :
