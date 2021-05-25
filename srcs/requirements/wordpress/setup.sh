@@ -5,4 +5,6 @@
 # find wordpress/ -type d -exec chmod 750 {} \
 # find wordpress/ -type f -exec chmod 640 {} \
 service php7.3-fpm start
-apt install nmap vim -y
+apt install nmap vim  mariadb-client php-mysql -y
+chown www-data:www-data /var/www/wordpress/
+chmod -R 755 /var/www/wordpress/

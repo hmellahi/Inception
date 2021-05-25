@@ -3,21 +3,26 @@ version: "3.3"
 services:
   db:
     build : ./requirements/mariadb/
-    restart: always
+    restart: unless-stopped
+    privileged: true
     ports:
-      - "3306:80"
+      - "3306:3306"
     volumes:
       - /home/hamza/data/db:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - custom-net
   wordpress:
+    env_file:
+      - .env
     restart: always
     depends_on: 
       - db
     build : ./requirements/wordpress/
     ports:
       - "9000:9000"
-    links:
-      - nginx
-      - db
+      # - "8000:80"
     volumes:
       # - ./test:/var/www/test
       - /home/hamza/data/wordpress:/var/www/wordpress
@@ -31,13 +36,12 @@ services:
       - "443:443"
     networks:
       - custom-net
+    links:
+      - wordpress
+      - db
     volumes:
       # - data:etc/nginx/sites-available/default
       - /home/hamza/data/wordpress:/var/www/wordpress
-    links:
-      - php7
-  php7:
-    image: php:7-fpm-alpine
 networks: 
   custom-net:
 # volumes: 
