@@ -19,8 +19,8 @@
 # Default server configuration
 #
 server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
+        listen 80;
+        #listen [::]:80 default_server;
 
         # SSL configuration
         #
@@ -37,14 +37,17 @@ server {
         # Don't use them in a production server!
         #
         # include snippets/snakeoil.conf;
-
-        root /var/www/html;
-
+        listen 443 ssl;
+        listen [::]:443 ssl;
+        root /var/www/;
         # Add index.php to the list if you are using PHP
         index index.html index.php index.htm index.nginx-debian.html;
 
-        server_name _;
+        server_name localhost;
 
+        ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+        ssl_certificate_key /etc/ssl/private/nginx-selfsigned.key;
+        ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
         location / {
                 # First attempt to serve request as file, then
                 # as directory, then fall back to displaying a 404.
@@ -54,12 +57,15 @@ server {
         # pass PHP scripts to FastCGI server
         #
         location ~ \.php$ {
-        #       include snippets/fastcgi-php.conf;
+               include snippets/fastcgi-php.conf;
         #
         #       # With php-fpm (or other unix sockets):
         #       fastcgi_pass unix:/run/php/php7.3-fpm.sock;
         #       # With php-cgi (or other tcp sockets):
-                fastcgi_pass wordpress:9000;
+        #        include /etc/nginx/fcgi_params;
+                fastcgi_pass  http:9000;
+        #        fastcgi_index index.php;
+        #        fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
         }
 
         # deny access to .htaccess files, if Apache's document root
@@ -68,11 +74,6 @@ server {
         #location ~ /\.ht {
         #       deny all;
         #}
-}
-
-server {
-  server_name .mydomain.com;
-  return 301 http://wordpress:9000;
 }
 
 # Virtual Host configuration for example.com

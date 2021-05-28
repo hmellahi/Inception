@@ -25,12 +25,14 @@ ps:
 	sudo docker-compose -f  ${SRC} ps
 
 run_wp:
-	sudo docker-compose -f ${SRC} run wordpress bash
-
+	#sudo docker-compose -f ${SRC} run wordpress bash
+	sudo docker container exec -it  srcs_wordpress_1 bash
 run_ng:
-	sudo docker-compose -f  ${SRC} run nginx bash
-
+	#sudo docker-compose -f  ${SRC} run nginx bash
+	sudo docker container exec -it  srcs_nginx_1 bash
 run_db:
-	sudo docker-compose  --user hamza -f  ${SRC} run db bash
+	# sudo docker-compose  --user hamza -f  ${SRC} run db bash
+	sudo docker container exec -it  srcs_db_1 bash
 # sudo docker container ps
-#sudo docker container exec -it bc1 bash
+#sudo docker container exec -it  srcs_wordpress_1 bash
+#sudo docker container exec -it  srcs_db_1 bash

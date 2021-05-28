@@ -16,7 +16,7 @@ services:
   wordpress:
     env_file:
       - .env
-    restart: always
+    # restart: always
     depends_on: 
       - db
     build : ./requirements/wordpress/
@@ -30,20 +30,27 @@ services:
       - custom-net
   nginx:
     build : ./requirements/nginx/
-    restart: always
+    # restart: always
     ports:
       - "80:80"
       - "443:443"
     networks:
       - custom-net
-    links:
-      - wordpress
-      - db
     volumes:
       # - data:etc/nginx/sites-available/default
       - /home/hamza/data/wordpress:/var/www/wordpress
+      - /home/hamza/data/adminer:/var/www/adminer
+  adminer:
+    build : ./requirements/adminer/
+    # ports:
+      # - "7000:80"
+    networks:
+      - custom-net
+    volumes:
+      - /home/hamza/data/adminer:/usr/share/adminer/
 networks: 
   custom-net:
+  bbb:
 # volumes: 
   # data:
     # requirements/nginx/default
