@@ -18,10 +18,8 @@
 
 # Default server configuration
 #
-server {
-        listen 80;
-        #listen [::]:80 default_server;
 
+server {
         # SSL configuration
         #
         # listen 443 ssl default_server;
@@ -56,17 +54,15 @@ server {
 
         # pass PHP scripts to FastCGI server
         #
-        location ~ \.php$ {
-               include snippets/fastcgi-php.conf;
-        #
-        #       # With php-fpm (or other unix sockets):
-        #       fastcgi_pass unix:/run/php/php7.3-fpm.sock;
-        #       # With php-cgi (or other tcp sockets):
-        #        include /etc/nginx/fcgi_params;
-                fastcgi_pass  http:9000;
-        #        fastcgi_index index.php;
-        #        fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
-        }
+       # location /wordpress {
+                location ~ \.php$ {
+                        include snippets/fastcgi-php.conf;
+                        # include /etc/nginx/fcgi_params;
+                        fastcgi_pass unix:/var/www/wordpress/php7.3-fpm.sock;
+                        #fastcgi_index index.php;
+                        #fastcgi_param SCRIPT_FILENAME $document_root/$fastcgi_script_name;
+                }
+        #}
 
         # deny access to .htaccess files, if Apache's document root
         # concurs with nginx's one

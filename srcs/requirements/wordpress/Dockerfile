@@ -9,9 +9,13 @@ RUN mkdir wordpress
 COPY wordpress/ wordpress
 RUN  sh setup.sh
 COPY www.conf  /etc/php/7.3/fpm/pool.d/www.conf
-RUN cd wordpress
-RUN service php7.3-fpm restart
+COPY php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
+#RUN ls -n /run/php/php7.3-fpm.sock /var/www/wordpress/php7.3-fpm.sock
+# ENTRYPOINT ["php7.3"]
 CMD ["tail", "-f"]
 # ENTRYPOINT [ "service", "php7.3-fpm" ,"start" ]
-
-# ENTRYPOINT [ "php", "-S" ,"0.0.0.0:9000" ]
+# chown www-data:www-data /var/www/adminer/adminer
+# chmod -R 755  /var/www/adminer/adminer
+# chown www-data:www-data /usr/share/adminer/adminer
+# chmod -R 755  /usr/share/adminer/adminer  
+#service php7.3-fpm start

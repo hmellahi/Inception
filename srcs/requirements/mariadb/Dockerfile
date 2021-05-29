@@ -4,12 +4,12 @@ COPY setup.sh .
 
 RUN  sh setup.sh
 RUN apt install -y ufw iptables
-RUN apt install -y sudo
+RUN apt install -y 
 COPY 50-server.cnf etc/mysql/mariadb.conf.d/50-server.cnf
-RUN sudo ufw allow 3306
-RUN service mysql stop
-# RUN sh s.sh
+RUN  ufw allow 3306
+COPY s.sh .
+COPY wp.sql .
+RUN sh s.sh
 
-# CMD ["mysqld", "--console"]
+CMD ["mysqld", "--console"]
 # ENTRYPOINT [ "sh", "s.sh"]
-CMD ["tail", "-f"]

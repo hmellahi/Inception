@@ -2,17 +2,17 @@ version: "3.3"
     
 services:
   db:
+    # container_name : mariadb
     build : ./requirements/mariadb/
     restart: unless-stopped
     privileged: true
-    ports:
-      - "3306:3306"
-    volumes:
-      - /home/hamza/data/db:/var/lib/mysql
+    # volumes:
+      #  - /home/hmellahi/data/db:/var/lib/mysql
     env_file:
       - .env
     networks:
-      - custom-net
+      - mariab-db-net
+    container_name: "db"
   wordpress:
     env_file:
       - .env
@@ -22,35 +22,50 @@ services:
     build : ./requirements/wordpress/
     ports:
       - "9000:9000"
-      # - "8000:80"
     volumes:
-      # - ./test:/var/www/test
-      - /home/hamza/data/wordpress:/var/www/wordpress
+      - type: bind
+        source: /home/hmellahi/data/wordpress
+        target: /var/www/wordpress
     networks:
-      - custom-net
+      - php-net
+      - mariab-db-net
+    container_name: "wordpress"
   nginx:
     build : ./requirements/nginx/
     # restart: always
+    depends_on: 
+      - wordpress
     ports:
       - "80:80"
       - "443:443"
     networks:
-      - custom-net
+      - php-net
+    container_name: "nginx"
     volumes:
-      # - data:etc/nginx/sites-available/default
-      - /home/hamza/data/wordpress:/var/www/wordpress
-      - /home/hamza/data/adminer:/var/www/adminer
-  adminer:
-    build : ./requirements/adminer/
-    # ports:
-      # - "7000:80"
+      - type: bind
+        source: /home/hmellahi/data/wordpress
+        target: /var/www/wordpress
+    # volumes:
+    #   - type: bind
+    #     source: /home/hmellahi/data/phpmyadmin
+    #     target: /var/www/phpmyadmin
+  # adminer:
+  #   build : ./requirements/adminer/
+  #   networks:
+  #     - custom-net
+    # volumes:
+      # - /home/hmellahi/data/adminer:/usr/share/adminer/
+  phpmyadmin:
+    # volumes:
+    #   - type: bind
+    #     source: /home/hmellahi/data/phpmyadmin
+    #     target: /usr/share/phpmyadmin
+    build : ./requirements/phpmyadmin/
     networks:
-      - custom-net
-    volumes:
-      - /home/hamza/data/adminer:/usr/share/adminer/
-networks: 
-  custom-net:
-  bbb:
-# volumes: 
+      - mariab-db-net
+    container_name: "phpmyadmin"
+networks:   
+  php-net:
+  mariab-db-net:
   # data:
-    # requirements/nginx/default
+  # "/home/hmellahi/data/phpmyadmin"

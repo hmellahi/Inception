@@ -1,6 +1,5 @@
-mysql -u root -e "CREATE USER 'dude'@'%' IDENTIFIED BY 'notAWeeaakPassword'"
-mysql -u root -e "CREATE DATABASE wordpress;use wordpress;source wordpress.sql;"
-mysql -u root -e "GRANT ALL PRIVILEGES ON wordpress.* TO 'hamza'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;"
-
 service mysql start
-tail -f
+mysql -u root -e "CREATE USER 'dude'@'%' IDENTIFIED BY 'dude'"
+mysql -u root -e "CREATE DATABASE wordpress;use wordpress;source wp.sql;"
+mysql -u root -e "use wordpress;GRANT ALL PRIVILEGES ON * TO 'dude'@'%' WITH GRANT OPTION; FLUSH PRIVILEGES;"
+#mysql -h db -u dude -p wordpress
