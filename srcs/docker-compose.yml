@@ -2,12 +2,11 @@ version: "3.3"
     
 services:
   db:
-    # container_name : mariadb
     build : ./requirements/mariadb/
-    restart: unless-stopped
+    restart: on-failure
     privileged: true
-    # volumes:
-      #  - /home/hmellahi/data/db:/var/lib/mysql
+    #volumes:
+       #- /home/hmellahi/data/db:/var/lib/mysql
     env_file:
       - .env
     networks:
@@ -16,23 +15,21 @@ services:
   wordpress:
     env_file:
       - .env
-    # restart: always
+    #restart: on-failure
     depends_on: 
       - db
     build : ./requirements/wordpress/
     ports:
       - "9000:9000"
     volumes:
-      - type: bind
-        source: /home/hmellahi/data/wordpress
-        target: /var/www/wordpress
+       - /home/hmellahi/data/wordpress:/var/www/wordpress
     networks:
       - php-net
       - mariab-db-net
     container_name: "wordpress"
   nginx:
     build : ./requirements/nginx/
-    # restart: always
+    restart: on-failure
     depends_on: 
       - wordpress
     ports:
@@ -42,30 +39,24 @@ services:
       - php-net
     container_name: "nginx"
     volumes:
-      - type: bind
-        source: /home/hmellahi/data/wordpress
-        target: /var/www/wordpress
-    # volumes:
-    #   - type: bind
-    #     source: /home/hmellahi/data/phpmyadmin
-    #     target: /var/www/phpmyadmin
-  # adminer:
-  #   build : ./requirements/adminer/
-  #   networks:
-  #     - custom-net
-    # volumes:
-      # - /home/hmellahi/data/adminer:/usr/share/adminer/
+      - /home/hmellahi/data/wordpress:/var/www/wordpress
+      - /home/hmellahi/data/phpmyadmin:/var/www/phpmyadmin
+  adminer:
+    build : ./requirements/adminer/
+    restart: on-failure
+    networks:
+      - mariab-db-net
+    volumes:
+      - /home/hmellahi/data/adminer:/usr/share/adminer/
+    container_name: "adminer"
   phpmyadmin:
-    # volumes:
-    #   - type: bind
-    #     source: /home/hmellahi/data/phpmyadmin
-    #     target: /usr/share/phpmyadmin
     build : ./requirements/phpmyadmin/
+    restart: on-failure
+    volumes:
+      - /home/hmellahi/data/phpmyadmin:/usr/share/phpmyadmin
     networks:
       - mariab-db-net
     container_name: "phpmyadmin"
 networks:   
   php-net:
   mariab-db-net:
-  # data:
-  # "/home/hmellahi/data/phpmyadmin"
