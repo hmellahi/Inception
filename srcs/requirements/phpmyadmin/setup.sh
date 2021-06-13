@@ -1,7 +1,7 @@
-DIR = "/usr/share/phpmyadmin";
-if ! [ "!$(ls -A $DIR)" ]; then
-    apt update  -y
-    apt upgrade -y
+apt update  -y
+apt upgrade -y
+DIR="/usr/share/phpmyadmin";
+if ! [ "$(ls -A $DIR)" ]; then
     apt install wget -y
     wget https://www.phpmyadmin.net/downloads/phpMyAdmin-latest-all-languages.tar.gz 
     tar -xvf phpMyAdmin-latest-all-languages.tar.gz 

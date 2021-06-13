@@ -15,12 +15,10 @@ services:
   wordpress:
     env_file:
       - .env
-    #restart: on-failure
+    #restart: always
     depends_on: 
       - db
     build : ./requirements/wordpress/
-    ports:
-      - "9000:9000"
     volumes:
        - /home/hmellahi/data/wordpress:/var/www/wordpress
     networks:
@@ -33,7 +31,6 @@ services:
     depends_on: 
       - wordpress
     ports:
-      - "80:80"
       - "443:443"
     networks:
       - php-net
@@ -41,14 +38,14 @@ services:
     volumes:
       - /home/hmellahi/data/wordpress:/var/www/wordpress
       - /home/hmellahi/data/phpmyadmin:/var/www/phpmyadmin
-  adminer:
-    build : ./requirements/adminer/
-    restart: on-failure
-    networks:
-      - mariab-db-net
-    volumes:
-      - /home/hmellahi/data/adminer:/usr/share/adminer/
-    container_name: "adminer"
+  # adminer:
+  #   build : ./requirements/adminer/
+  #   restart: on-failure
+  #   networks:
+  #     - mariab-db-net
+  #   volumes:
+  #     - /home/hmellahi/data/adminer:/usr/share/adminer/
+  #   container_name: "adminer"
   phpmyadmin:
     build : ./requirements/phpmyadmin/
     restart: on-failure
