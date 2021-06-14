@@ -5,8 +5,8 @@ services:
     build : ./requirements/mariadb/
     restart: on-failure
     privileged: true
-    #volumes:
-       #- /home/hmellahi/data/db:/var/lib/mysql
+    volumes:
+       - /home/hmellahi/data/mariab:/var/lib/mysql/
     env_file:
       - .env
     networks:
@@ -15,7 +15,7 @@ services:
   wordpress:
     env_file:
       - .env
-    #restart: always
+    restart: on-failure
     depends_on: 
       - db
     build : ./requirements/wordpress/
