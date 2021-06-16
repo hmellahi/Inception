@@ -5,8 +5,8 @@ services:
     build : ./requirements/mariadb/
     restart: on-failure
     privileged: true
-    volumes:
-       - /var/lib/boot2docker/home/hmellahi/data/mariab:/var/lib/mysql/
+    # volumes:
+    #    - /var/lib/boot2docker/home/hmellahi/data/mariab:/var/lib/mysql/
     env_file:
       - .env
     networks:
@@ -38,6 +38,8 @@ services:
     volumes:
       - /var/lib/boot2docker/home/hmellahi/data/wordpress:/var/www/wordpress
       - /var/lib/boot2docker/home/hmellahi/data/phpmyadmin:/var/www/phpmyadmin
+    env_file:
+      - .env
   # adminer:
   #   build : ./requirements/adminer/
   #   restart: on-failure
@@ -57,3 +59,5 @@ services:
 networks:   
   php-net:
   mariab-db-net:
+volumes:
+  gogs-data:

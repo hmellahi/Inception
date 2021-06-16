@@ -3,7 +3,7 @@ SRC = ./srcs/docker-compose.yml
 
 all :
 	# docker-machine start
-	eval $(docker-machine env)
+	bash start.sh
 	docker-compose -f ${SRC} build 
 	docker-compose -f ${SRC} up -d --remove-orphans
 up :
