@@ -9,7 +9,7 @@ if ! [ "$(ls -A $DIR)" ]; then
     mkdir  /usr/share/phpmyadmin
     mv phpMyAdmin-5.1.1-all-languages/* /usr/share/phpmyadmin
     chown -R www-data:www-data /usr/share/phpmyadmin 
-    COPY config.inc.php /usr/share/phpmyadmin/config.inc.php
+    cp config.inc.php /usr/share/phpmyadmin
 else
     echo "reading from cache" >> 1
 fi

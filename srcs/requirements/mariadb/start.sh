@@ -4,7 +4,7 @@ if ! [ "$(ls -A $DIR)" ]; then
     mkdir /var/lib/mysql
     mkdir /var/lib/mysql/mysql
     chown -R mysql:mysql /var/lib/mysql 
-     mysql_install_db
+    mysql_install_db
     service mysql start
     # mysql -u root -e "CREATE USER 'dude'@'%' IDENTIFIED BY 'dude'"
     # mysql -u root -e "CREATE DATABASE wordpress;use wordpress"

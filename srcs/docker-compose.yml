@@ -1,4 +1,4 @@
-version: "3.3"
+version: "2.2"
     
 services:
   db:
@@ -21,6 +21,7 @@ services:
     build : ./requirements/wordpress/
     volumes:
        - /var/lib/boot2docker/home/hmellahi/data/wordpress:/var/www/wordpress
+       - /var/lib/boot2docker/home/hmellahi/data/phpmyadmin:/var/www/phpmyadmin
     networks:
       - php-net
       - mariab-db-net
@@ -59,5 +60,7 @@ services:
 networks:   
   php-net:
   mariab-db-net:
-volumes:
-  gogs-data:
+# volumes:
+#   data:
+#     name: /var/
+    # wp config create --dbname=$WP_DATABASE_NAME --dbuser=$WP_DATABASE_USER --dbhost=$WP_HOSTNAME --dbpass=$WP_DATABASE_PASSWORD

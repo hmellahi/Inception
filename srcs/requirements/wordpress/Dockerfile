@@ -6,7 +6,7 @@ COPY php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
 COPY wordpress wp
 #RUN ls -n /run/php/php7.3-fpm.sock /var/www/wordpress/php7.3-fpm.sock
 # ENTRYPOINT ["php7.3"]
-ENTRYPOINT [ "sh", "setup.sh" ]
+CMD [ "sh", "setup.sh" ]
 # ENTRYPOINT [ "service", "php7.3-fpm"  ,"start" ]
 # chown www-data:www-data /var/www/adminer/adminer
 # chmod -R 755  /var/www/adminer/adminer

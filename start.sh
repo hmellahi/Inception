@@ -1,3 +1,3 @@
 export PATH=$PATH:/goinfre/hmellahi/.brew/bin/
-#docker-machine start inception
-eval $(docker-machine env inception)
+docker-machine start hmellahi.42.fr
+eval $(docker-machine env hmellahi.42.fr)
