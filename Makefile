@@ -12,8 +12,8 @@ start:
 	docker-compose -f ${SRC} start
 down:
 	 docker-compose -f ${SRC} down
-clean :
-	docker rmi $(docker images -a -q)
+volumes :
+	docker volume ls
 ps:
 	 docker-compose -f  ${SRC} ps
 run_wp:

@@ -5,8 +5,8 @@ services:
     build : ./requirements/mariadb/
     restart: on-failure
     privileged: true
-    # volumes:
-    #    - /var/lib/boot2docker/home/hmellahi/data/mariab:/var/lib/mysql/
+    volumes:
+       - mariadb:/var/lib/mysql/
     env_file:
       - .env
     networks:
@@ -20,12 +20,13 @@ services:
       - db
     build : ./requirements/wordpress/
     volumes:
-       - /var/lib/boot2docker/home/hmellahi/data/wordpress:/var/www/wordpress
+       - wordpress:/var/www/wordpress
        - /var/lib/boot2docker/home/hmellahi/data/phpmyadmin:/var/www/phpmyadmin
     networks:
       - php-net
       - mariab-db-net
     container_name: "wordpress"
+    tty: true
   nginx:
     build : ./requirements/nginx/
     restart: on-failure
@@ -37,7 +38,7 @@ services:
       - php-net
     container_name: "nginx"
     volumes:
-      - /var/lib/boot2docker/home/hmellahi/data/wordpress:/var/www/wordpress
+      - wordpress:/var/www/wordpress
       - /var/lib/boot2docker/home/hmellahi/data/phpmyadmin:/var/www/phpmyadmin
     env_file:
       - .env
@@ -60,7 +61,24 @@ services:
 networks:   
   php-net:
   mariab-db-net:
-# volumes:
-#   data:
-#     name: /var/
-    # wp config create --dbname=$WP_DATABASE_NAME --dbuser=$WP_DATABASE_USER --dbhost=$WP_HOSTNAME --dbpass=$WP_DATABASE_PASSWORD
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/hmellahi/data/mariadb'
+      # device: '/var/lib/boot2docker/home/hmellahi/data/mariadb'
+  wordpress:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/hmellahi/data/wordpress'
+  # wordpress:
+  #   driver: local
+  #   driver_opts:
+  #     type: 'none'
+  #     o: 'bind'
+  #     device: '/var/lib/boot2docker/home/hmellahi/data/wordpress'

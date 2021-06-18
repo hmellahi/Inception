@@ -22,9 +22,9 @@ if [ "$(ls $DIR | wc -l)" -le 1 ]; then
 else
     echo "reading from cache" > 1
 fi
-#touch wordpress/wtf_bruh
+#touch wordpress/wtf_bruhx`
 service php7.3-fpm start
 # php7.3
-tail -f
+#tail -f
 
 # sed -i 's/$WP_DATABASE_NAME/'$WP_DATABASE_NAME'/g' wp-config.php
