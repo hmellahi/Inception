@@ -1,4 +1,4 @@
-version: "2.2"
+version: "3"
     
 services:
   db:
@@ -21,12 +21,11 @@ services:
     build : ./requirements/wordpress/
     volumes:
        - wordpress:/var/www/wordpress
-       - /var/lib/boot2docker/home/hmellahi/data/phpmyadmin:/var/www/phpmyadmin
+       - phpmyadmin:/var/www/phpmyadmin
     networks:
       - php-net
       - mariab-db-net
     container_name: "wordpress"
-    tty: true
   nginx:
     build : ./requirements/nginx/
     restart: on-failure
@@ -39,7 +38,7 @@ services:
     container_name: "nginx"
     volumes:
       - wordpress:/var/www/wordpress
-      - /var/lib/boot2docker/home/hmellahi/data/phpmyadmin:/var/www/phpmyadmin
+      - phpmyadmin:/var/www/phpmyadmin
     env_file:
       - .env
   # adminer:
@@ -54,7 +53,7 @@ services:
     build : ./requirements/phpmyadmin/
     restart: on-failure
     volumes:
-      - /var/lib/boot2docker/home/hmellahi/data/phpmyadmin:/usr/share/phpmyadmin
+      - phpmyadmin:/usr/share/phpmyadmin
     networks:
       - mariab-db-net
     container_name: "phpmyadmin"
@@ -68,17 +67,16 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/hmellahi/data/mariadb'
-      # device: '/var/lib/boot2docker/home/hmellahi/data/mariadb'
+      device: '/var/lib/boot2docker/home/hmellahi/data/mariadb'
   wordpress:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/home/hmellahi/data/wordpress'
-  # wordpress:
-  #   driver: local
-  #   driver_opts:
-  #     type: 'none'
-  #     o: 'bind'
-  #     device: '/var/lib/boot2docker/home/hmellahi/data/wordpress'
+      device: '/var/lib/boot2docker/home/hmellahi/data/wordpress'
+  phpmyadmin:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/var/lib/boot2docker/home/hmellahi/data/phpmyadmin'

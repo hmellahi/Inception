@@ -13,4 +13,3 @@ if ! [ "$(ls -A $DIR)" ]; then
 else
     echo "reading from cache" >> 1
 fi
-tail -f
