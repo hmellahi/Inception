@@ -3,11 +3,12 @@ SRC = ./srcs/docker-compose.yml
 
 all :
 	# docker-machine start
-	#bash start.sh
+	#source start.sh
+	#PATH=$PATH:/goinfre/hmellahi/.brew/bin/
 	docker-compose -f ${SRC} build 
 	docker-compose -f ${SRC} up -d --remove-orphans
 up :
-	 docker-compose -f ${SRC} up -d --remove-orphans 
+	sh start.sh
 start:
 	docker-compose -f ${SRC} start
 down:

@@ -22,6 +22,7 @@ services:
     volumes:
        - wordpress:/var/www/wordpress
        - phpmyadmin:/var/www/phpmyadmin
+       - adminer:/var/www/adminer
     networks:
       - php-net
       - mariab-db-net
@@ -39,16 +40,17 @@ services:
     volumes:
       - wordpress:/var/www/wordpress
       - phpmyadmin:/var/www/phpmyadmin
+      - adminer:/var/www/adminer
     env_file:
       - .env
-  # adminer:
-  #   build : ./requirements/adminer/
-  #   restart: on-failure
-  #   networks:
-  #     - mariab-db-net
-  #   volumes:
-  #     - /home/hmellahi/data/adminer:/usr/share/adminer/
-  #   container_name: "adminer"
+  adminer:
+    build : ./requirements/adminer/
+    restart: on-failure
+    networks:
+      - mariab-db-net
+    volumes:
+      - adminer:/usr/share/adminer/adminer/
+    container_name: "adminer"
   phpmyadmin:
     build : ./requirements/phpmyadmin/
     restart: on-failure
@@ -80,3 +82,9 @@ volumes:
       type: 'none'
       o: 'bind'
       device: '/var/lib/boot2docker/home/hmellahi/data/phpmyadmin'
+  adminer:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/var/lib/boot2docker/home/hmellahi/data/adminer'

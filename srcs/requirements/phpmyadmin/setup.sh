@@ -1,5 +1,3 @@
-apt update  -y
-apt upgrade -y
 DIR="/usr/share/phpmyadmin";
 if ! [ "$(ls -A $DIR)" ]; then
     apt install wget -y
