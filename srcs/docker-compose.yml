@@ -16,13 +16,13 @@ services:
     env_file:
       - .env
     restart: always
-    depends_on: 
+    depends_on:
       - db
     build : ./requirements/wordpress/
     volumes:
        - wordpress:/var/www/wordpress
-       - phpmyadmin:/var/www/phpmyadmin
-       - adminer:/var/www/adminer
+       - phpmyadmin:/var/www/wordpress/phpmyadmin
+       - adminer:/var/www/wordpress/adminer
     networks:
       - php-net
       - mariab-db-net
@@ -39,8 +39,8 @@ services:
     container_name: "nginx"
     volumes:
       - wordpress:/var/www/wordpress
-      - phpmyadmin:/var/www/phpmyadmin
-      - adminer:/var/www/adminer
+      - phpmyadmin:/var/www/wordpress/phpmyadmin
+      - adminer:/var/www/wordpress/adminer
     env_file:
       - .env
   adminer:
