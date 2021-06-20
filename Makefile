@@ -2,13 +2,9 @@
 SRC = ./srcs/docker-compose.yml 
 
 all :
-	# docker-machine start
-	#source start.sh
-	#PATH=$PATH:/goinfre/hmellahi/.brew/bin/
-	docker-compose -f ${SRC} build 
-	docker-compose -f ${SRC} up -d --remove-orphans
+	sudo docker-compose -f ${SRC} build 
 up :
-	sh start.sh
+	sudo docker-compose -f ${SRC} up -d --remove-orphans
 start:
 	docker-compose -f ${SRC} start
 down:
@@ -25,3 +21,8 @@ run_db:
 	 docker container exec -it  db bash
 run_pm:
 	 docker container exec -it  phpmyadmin bash
+run_ad:
+	 docker container exec -it  adminer bash	
+clean : down
+	# sh clean.sh
+	#docker volume rm $(docker volume ls -q)

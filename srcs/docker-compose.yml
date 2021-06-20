@@ -3,7 +3,7 @@ version: "3"
 services:
   db:
     build : ./requirements/mariadb/
-    restart: on-failure
+    restart: always
     privileged: true
     volumes:
        - mariadb:/var/lib/mysql/
@@ -15,7 +15,7 @@ services:
   wordpress:
     env_file:
       - .env
-    restart: on-failure
+    restart: always
     depends_on: 
       - db
     build : ./requirements/wordpress/
@@ -29,7 +29,7 @@ services:
     container_name: "wordpress"
   nginx:
     build : ./requirements/nginx/
-    restart: on-failure
+    restart: always
     depends_on: 
       - wordpress
     ports:
@@ -69,22 +69,22 @@ volumes:
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/var/lib/boot2docker/home/hmellahi/data/mariadb'
+      device: '/home/hmellahi/data/mariadb'
   wordpress:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/var/lib/boot2docker/home/hmellahi/data/wordpress'
+      device: '/home/hmellahi/data/wordpress'
   phpmyadmin:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/var/lib/boot2docker/home/hmellahi/data/phpmyadmin'
+      device: '/home/hmellahi/data/phpmyadmin'
   adminer:
     driver: local
     driver_opts:
       type: 'none'
       o: 'bind'
-      device: '/var/lib/boot2docker/home/hmellahi/data/adminer'
+      device: '/home/hmellahi/data/adminer'
