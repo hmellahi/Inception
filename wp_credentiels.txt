@@ -1,7 +1,0 @@
-admin:
-    username : bruh
-    password : YD(PgtpKjtI@x%dveW
-
-user:
-    username :saas
-    password : 4T4e55rz&*tqSy&U&mT3Rc4W

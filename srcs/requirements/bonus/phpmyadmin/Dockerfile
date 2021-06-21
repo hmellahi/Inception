@@ -1,7 +1,7 @@
 FROM   debian:buster
 
-COPY setup.sh .
-COPY config.inc.php .
+COPY tools/setup.sh .
+COPY tools/config.inc.php .
 
 RUN  apt update  -y
 RUN  apt upgrade -y

@@ -1,5 +1,5 @@
 DIR="/var/www/wordpress/";
-if [ "$(ls $DIR | wc -l)" -le 1 ]; then
+if [ $(ls -A $DIR | wc -l) -le 3 ]; then
     echo "empty, do something" > 0
     cp -r wp/* wordpress
     chown www-data:www-data /var/www/wordpress/
@@ -11,6 +11,7 @@ if [ "$(ls $DIR | wc -l)" -le 1 ]; then
 else
     echo "reading from cache" > 1
 fi
+
 service php7.3-fpm start
 service php7.3-fpm stop
 /usr/sbin/php-fpm7.3 -F -R

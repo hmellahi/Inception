@@ -1,7 +1,7 @@
 version: "3"
     
 services:
-  db:
+  mariadb:
     build : ./requirements/mariadb/
     restart: always
     privileged: true
@@ -11,13 +11,15 @@ services:
       - .env
     networks:
       - mariab-db-net
-    container_name: "db"
+    container_name: "mariadb"
+    image : "mariadb"
+    
   wordpress:
     env_file:
       - .env
     restart: always
     depends_on:
-      - db
+      - mariadb
     build : ./requirements/wordpress/
     volumes:
        - wordpress:/var/www/wordpress
@@ -27,6 +29,8 @@ services:
       - php-net
       - mariab-db-net
     container_name: "wordpress"
+    image : "wordpress"
+
   nginx:
     build : ./requirements/nginx/
     restart: always
@@ -37,28 +41,34 @@ services:
     networks:
       - php-net
     container_name: "nginx"
+    image : "nginx"
     volumes:
       - wordpress:/var/www/wordpress
       - phpmyadmin:/var/www/wordpress/phpmyadmin
       - adminer:/var/www/wordpress/adminer
     env_file:
       - .env
+
   adminer:
-    build : ./requirements/adminer/
+    build : ./requirements/bonus/adminer/
     restart: on-failure
     networks:
       - mariab-db-net
     volumes:
       - adminer:/usr/share/adminer/adminer/
     container_name: "adminer"
+    image : "adminer"
+  
   phpmyadmin:
-    build : ./requirements/phpmyadmin/
+    build : ./requirements/bonus/phpmyadmin/
     restart: on-failure
     volumes:
       - phpmyadmin:/usr/share/phpmyadmin
     networks:
       - mariab-db-net
     container_name: "phpmyadmin"
+    image : "phpmyadmin"
+
 networks:   
   php-net:
   mariab-db-net:

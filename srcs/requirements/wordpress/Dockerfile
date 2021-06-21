@@ -2,15 +2,12 @@ FROM   debian:buster
 
 WORKDIR /var/www/
 
-COPY setup.sh .
-COPY start.sh .
-COPY wordpress wp
-
-RUN  apt -y  update
+COPY tools/setup.sh .
 RUN  sh setup.sh
-RUN apt -y install php-fpm
 
-COPY php-fpm.conf /etc/php/7.3/fpm/php-fpm.conf
-COPY www.conf  /etc/php/7.3/fpm/pool.d/www.conf
+COPY tools/start.sh .
+COPY tools/wordpress wp
+
+COPY tools/www.conf  /etc/php/7.3/fpm/pool.d/www.conf
 
 CMD [ "sh", "start.sh" ]

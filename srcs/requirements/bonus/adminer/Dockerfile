@@ -1,7 +1,8 @@
 FROM   debian:buster
 
-COPY setup.sh .
+COPY tools/setup.sh .
 
 RUN apt -y update
-RUN apt -y upgrade 
+RUN apt -y upgrade
+
 CMD sh setup.sh
